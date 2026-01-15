@@ -9,4 +9,12 @@
   button {
     @apply hover:scale-105;
   }
+
+  input:not([type="checkbox"]):not([type="radio"]) {
+    @apply outline-none focus:ring border border-gray-300 focus:ring-blue-500 rounded-lg;
+  }
+
+  textarea {
+    @apply outline-none focus:ring border border-gray-300 focus:ring-blue-500 rounded-md;
+  }
 }

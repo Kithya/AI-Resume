@@ -13,6 +13,10 @@ import {
   User,
 } from "lucide-react";
 import PersonalInfoForm from "../components/PersonalInfoForm";
+import Preview from "./Preview.jsx";
+import ResumePreview from "../components/ResumePreview.jsx";
+import TemplateSelector from "../components/TemplateSelector.jsx";
+import ColorPicker from "../components/ColorPicker.jsx";
 const ResumeBuilder = () => {
   const { resumeId } = useParams();
 
@@ -43,8 +47,9 @@ const ResumeBuilder = () => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadExstingResume();
-  }, []);
+  }, [resumeId]);
 
   const sections = [
     { id: "personal", name: "Personal Information", icon: User },
@@ -85,7 +90,24 @@ const ResumeBuilder = () => {
 
               {/* section navigation */}
               <div className="flex justify-between items-center mb-6 border-b border-gray-300 py-1">
-                <div></div>
+                <div className="flex items-center gap-2">
+                  <TemplateSelector
+                    selectedTemplate={resumeData.template}
+                    onChange={(template) =>
+                      setResumeData((prev) => ({ ...prev, template }))
+                    }
+                  />
+
+                  <ColorPicker
+                    selectedColor={resumeData.accent_color}
+                    onChange={(color) =>
+                      setResumeData((prev) => ({
+                        ...prev,
+                        accent_color: color,
+                      }))
+                    }
+                  />
+                </div>
                 <div className="flex items-center">
                   {" "}
                   {activeSectionIndex !== 0 && (
@@ -140,6 +162,17 @@ const ResumeBuilder = () => {
           </div>
 
           {/* Right side - Preview */}
+
+          <div className="lg:col-span-7 max-lg:mt-6">
+            <div>{/* buttons */}</div>
+
+            {/* Resume preview */}
+            <ResumePreview
+              data={resumeData}
+              template={resumeData.template}
+              accentColor={resumeData.accent_color}
+            />
+          </div>
         </div>
       </div>
     </div>

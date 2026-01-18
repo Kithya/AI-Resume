@@ -7,7 +7,7 @@
 
 @layer base {
   button {
-    @apply hover:scale-105;
+    @apply cursor-pointer;
   }
 
   input:not([type="checkbox"]):not([type="radio"]) {

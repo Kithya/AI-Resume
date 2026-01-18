@@ -17,6 +17,7 @@ import Preview from "./Preview.jsx";
 import ResumePreview from "../components/ResumePreview.jsx";
 import TemplateSelector from "../components/TemplateSelector.jsx";
 import ColorPicker from "../components/ColorPicker.jsx";
+import ProfessionalSummaryForm from "../components/ProfessionalSummaryForm.jsx";
 const ResumeBuilder = () => {
   const { resumeId } = useParams();
 
@@ -114,7 +115,7 @@ const ResumeBuilder = () => {
                     <button
                       onClick={() => {
                         setActiveSectionIndex((prevIndex) =>
-                          Math.max(prevIndex - 1, 0)
+                          Math.max(prevIndex - 1, 0),
                         );
                       }}
                       className="flex items-center gap-1 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all"
@@ -126,7 +127,7 @@ const ResumeBuilder = () => {
                   <button
                     onClick={() => {
                       setActiveSectionIndex((prevIndex) =>
-                        Math.min(prevIndex + 1, sections.length - 1)
+                        Math.min(prevIndex + 1, sections.length - 1),
                       );
                     }}
                     className={`flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all ${
@@ -154,6 +155,21 @@ const ResumeBuilder = () => {
                       }
                       removeBackground={removeBackground}
                       setRemoveBackground={setRemoveBackground}
+                    />
+                  </div>
+                )}
+
+                {activeSection.id === "summary" && (
+                  <div>
+                    <ProfessionalSummaryForm
+                      data={resumeData.professional_summary}
+                      onChange={(data) =>
+                        setResumeData((prev) => ({
+                          ...prev,
+                          professional_summary: data,
+                        }))
+                      }
+                      setResumeData={setResumeData}
                     />
                   </div>
                 )}

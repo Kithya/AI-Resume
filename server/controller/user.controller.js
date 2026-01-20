@@ -29,7 +29,11 @@ export const registerUser = async (req, res) => {
 
     // create new user
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User.create({ name, email, password: hashedPassword });
+    const newUser = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
 
     // return success message
     const token = generateToken(newUser._id);
@@ -72,7 +76,7 @@ export const loginUser = async (req, res) => {
     user.password = undefined;
     return res
       .status(200)
-      .json({ message: "User logged in successfully", token });
+      .json({ message: "User logged in successfully", token, user });
   } catch (error) {
     console.error(error);
     return res.status(400).json({ message: error.message });
@@ -110,7 +114,9 @@ export const getUserResumes = async (req, res) => {
 
     // return user resumes
     const resumes = await Resume.find({ userId });
-    return res.status(200).json({ message: "Resumes found successfully", resumes });
+    return res
+      .status(200)
+      .json({ message: "Resumes found successfully", resumes });
   } catch (error) {
     console.error(error);
     return res.status(400).json({ message: error.message });

@@ -206,7 +206,7 @@ export const uploadResume = async (req, res) => {
     const extractedData = response.choices[0].message.content;
     const parsedData = JSON.parse(extractedData);
 
-    const newResume = new Resume.create({ userId, title, ...parsedData });
+    const newResume = await Resume.create({ userId, title, ...parsedData });
 
     res.json({ resumeId: newResume._id });
   } catch (error) {

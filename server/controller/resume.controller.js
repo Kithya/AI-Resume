@@ -96,9 +96,14 @@ export const updateResume = async (req, res) => {
   try {
     const userId = req.userId;
     const { resumeId, resumeData, removeBackground } = req.body;
-    const image = req.file ? req.file.path : null;
+    const image = req.file;
 
-    let resumeDataCopy = JSON.parse(JSON.stringify(resumeData));
+    let resumeDataCopy;
+    if (typeof resumeData === "string") {
+      resumeDataCopy = JSON.parse(resumeData);
+    } else {
+      resumeDataCopy = structuredClone(resumeData);
+    }
 
     if (image) {
       const imageBufferData = fs.createReadStream(image.path);
@@ -109,7 +114,7 @@ export const updateResume = async (req, res) => {
         folder: "user-resume",
         transformation: {
           pre:
-            "w-300 ,h-300, fo-face, z-0.75" +
+            "w-300,h-300,fo-face,z-0.75" +
             (removeBackground ? ",e-bgremove" : ""),
         },
       });

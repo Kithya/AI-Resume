@@ -12,7 +12,17 @@ const PORT = process.env.PORT || 3000;
 // database connection
 await connectDB();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://ai-resume-wine-five.vercel.app", "http://localhost:5173"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  }),
+);
+
+// Important: reply to preflight
+app.options("*", cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {

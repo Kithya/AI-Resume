@@ -21,8 +21,6 @@ app.use(
   }),
 );
 
-// Important: reply to preflight
-app.options("*", cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
